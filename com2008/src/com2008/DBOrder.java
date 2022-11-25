@@ -1,5 +1,6 @@
 package com2008;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +10,16 @@ import Classes.Order;
 
 public class DBOrder {
 
+	private DBConnection dbConnection;
+	static String url = "jdbc:mysql://stusql.dcs.shef.ac.uk/";
+	static String dbname = "team045";
+	static String username = "team045";
+	static String password = "e7b1abbe";
+	
+	
+	
+	
 	public void save(Order order) {
-		
-		// TODO Auto-generated method stub
 		
 	}
 

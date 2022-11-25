@@ -2,26 +2,85 @@ package Classes;
 
 import java.util.List;
 
-public class Wheel {
+import com.mysql.cj.result.StringValueFactory;
 
-	public int getUnitCost() {
-		// TODO Auto-generated method stub
-		return 0;
+import Classes.HandleBar.Style;
+
+public class Wheel extends Product{
+	
+	public enum BrakeStyle{
+		RIM,
+		DISK
+	}
+	
+	public enum StyleWheel{
+		
+		ROAD,
+		MOUNTAIN,
+		HYBRID
+	}
+	
+	private StyleWheel style;
+	private BrakeStyle breakStyle;
+	private String diameter;
+	
+	public Wheel(String serialNumber, String productName, String brandName, int unitCost, int quantity,StyleWheel style, BrakeStyle breakStyle,String diameter) {
+		super(serialNumber, productName, brandName, unitCost, quantity);
+		this.diameter = diameter;
+		this.style = style;
+		this.breakStyle = breakStyle;
 	}
 
+
+	public String getDiameter() {
+		return diameter;
+	}
+
+
+	public void setDiameter(String diameter) {
+		this.diameter = diameter;
+	}
+
+
+	public StyleWheel getStyle() {
+		return style;
+	}
+
+
+	public void setStyle(StyleWheel style) {
+		this.style = style;
+	}
+
+
+	public BrakeStyle getBreakStyle() {
+		return breakStyle;
+	}
+
+
+	public void setBreakStyle(BrakeStyle breakStyle) {
+		this.breakStyle = breakStyle;
+	}
+
+	
+	
+	
+	
+	
+	
 	public static List<Wheel> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getSize() {
+	
+
+	public static Wheel findOne(int wheelId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getBrandName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
+	
 
 }

@@ -16,9 +16,12 @@ import javax.swing.JTextField;
 
 import com.mysql.cj.result.StringValueFactory;
 
+import Classes.Address;
+import Classes.Bike;
 import Classes.Customer;
 import Classes.Frameset;
 import Classes.HandleBar;
+import Classes.Order;
 import Classes.Staff;
 import Classes.Wheel;
 
@@ -46,31 +49,35 @@ public class ListPage {
 	private static JTextField postcodeText2;
 	private static JButton  button2;
 	private static JButton  button3;
-	
-	
+	private static JLabel		roadNameLabel;
+	private static JTextField roadNameText;
+	private static JLabel		cityLabel;
+	private static JTextField cityText;
+	private static JLabel		message;
+	private static JLabel		nameLabel;
 	
 	public static void main(String[] args) {
 		
 //		
-//		List<HandleBar> handelBarList = HandleBar.getAll();
-//		String[] handleBarStrings = new String[handelBarList.size()];
-//		for(int i=0; i<handleBarStrings.length; i++) {
-//			handleBarStrings[i] = "" +handelBarList.get(i).getStyle() + handelBarList.get(i).getBrandName() + handelBarList.get(i).getUnitCost();
-//			}	
-//				
-//				
-//		List<Wheel> wheelList = Wheel.getAll();
-//		String[] wheelStrings = new String[wheelList.size()];
-//		for(int i=0; i<wheelStrings.length; i++) {
-//			wheelStrings[i] = "" + wheelList.get(i).getSize() +wheelList.get(i).getBrandName()+ wheelList.get(i).getUnitCost();
-//		}
-//		
-//		
-//		List<Frameset> framesetList = Frameset.getAll();
-//		String[] frameStrings = new String[framesetList.size()];
-//		for(int i=0; i<frameStrings.length; i++) {
-//			frameStrings[i] = "" +framesetList.get(i).getType() + framesetList.get(i)+framesetList.get(i).getUnitCost();
-//		}
+		List<HandleBar> handelBarList = HandleBar.getAll();
+		String[] handleBarStrings = new String[handelBarList.size()];
+		for(int i=0; i<handleBarStrings.length; i++) {
+			handleBarStrings[i] = "" +handelBarList.get(i).getStyle() + handelBarList.get(i).getBrandName() + handelBarList.get(i).getUnitCost();
+			}	
+				
+				
+		List<Wheel> wheelList = Wheel.getAll();
+		String[] wheelStrings = new String[wheelList.size()];
+		for(int i=0; i<wheelStrings.length; i++) {
+			wheelStrings[i] = "" + wheelList.get(i).getSize() +wheelList.get(i).getBrandName()+ wheelList.get(i).getUnitCost();
+		}
+		
+		
+		List<Frameset> framesetList = Frameset.getAll();
+		String[] frameStrings = new String[framesetList.size()];
+		for(int i=0; i<frameStrings.length; i++) {
+			frameStrings[i] = "" +framesetList.get(i).getType() + framesetList.get(i)+framesetList.get(i).getUnitCost();
+		}
 //		
 		
 		
@@ -84,31 +91,33 @@ public class ListPage {
 		
 		
 		
-//		JComboBox handleBarBox =new JComboBox(handleBarStrings);
-//		handleBarBox.setSelectedIndex(0);
-//		
-//		JComboBox framesetBox =new JComboBox(frameStrings); 
-//		framesetBox.setSelectedIndex(0);
-//		
-//		JComboBox  wheelBox=new JComboBox(wheelStrings);  
-//		wheelBox.setSelectedIndex(0);
+		JComboBox handleBarBox =new JComboBox(handleBarStrings);
+		handleBarBox.setSelectedIndex(0);
 		
-//		
-//		panel.add(wheelBox);
-//		panel.add(framesetBox);
-//		panel.add(framesetBox);
-//		
-//		
-//		
+		JComboBox framesetBox =new JComboBox(frameStrings); 
+		framesetBox.setSelectedIndex(0);
+		
+		JComboBox wheelBox=new JComboBox(wheelStrings);  
+		wheelBox.setSelectedIndex(0);
+		
+		nameLabel = new JLabel("FORENAME");
+		nameLabel.setBounds(100, 20, 85, 25);
+		panel.add(nameLabel);
+		
+		panel.add(wheelBox);
+		panel.add(framesetBox);
+		panel.add(framesetBox);
+		panel.add(nameLabel);
+			
 		JPanel panel2 = new JPanel();
-		panel2.setVisible(true);
+		panel2.setVisible(false);
 		frame.add(panel2,BorderLayout.SOUTH);
 		
 		fornameLabel = new JLabel("FORENAME");
 		fornameLabel.setBounds(100, 20, 85, 25);
 		panel2.add(fornameLabel);
 		
-		fornameText = new JTextField(20);
+		fornameText = new JTextField(10);
 		fornameText.setBounds(110, 20, 85, 25);
 		panel2.add(fornameText);
 		
@@ -118,7 +127,7 @@ public class ListPage {
 		surnameLabel.setBounds(120, 20, 85, 25);
 		panel2.add(surnameLabel);
 		
-		surnameText = new JTextField(20);
+		surnameText = new JTextField(10);
 		surnameText.setBounds(130, 20, 85, 25);
 		panel2.add(surnameText);
 		
@@ -128,23 +137,32 @@ public class ListPage {
 		houseNumberLabel.setBounds(140, 20, 85, 25);
 		panel2.add(houseNumberLabel);
 		
-		houseNumberText = new JTextField(20);
+		houseNumberText = new JTextField(10);
 		houseNumberText.setBounds(150, 20, 85, 25);
 		panel2.add(houseNumberText);
 		
 		
 		
-		postcodeLabel = new JLabel("ADDRESS");
+		postcodeLabel = new JLabel("POSTCODE");
 		postcodeLabel.setBounds(160, 20, 85, 25);
 		panel2.add(postcodeLabel);
 		
-		postcodeText = new JTextField(20);
+		postcodeText = new JTextField(10);
 		postcodeText.setBounds(170, 20, 85, 25);
 		panel2.add(postcodeText);
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		JPanel panel3 = new JPanel();
-		panel3.setVisible(true);
+		panel3.setVisible(false);
 		frame.add(panel3, BorderLayout.WEST);
 		
 		fornameLabel2 = new JLabel("FORENAME");
@@ -187,13 +205,36 @@ public class ListPage {
 		
 		
 
+		roadNameLabel = new JLabel("ROADNAME");
+		roadNameLabel.setBounds(10, 20, 85, 25);
+		panel3.add(roadNameLabel);
+		
+		roadNameText = new JTextField(10);
+		roadNameText.setBounds(100, 20, 85, 25);
+		panel3.add(roadNameText);
+		
+		
+		cityLabel = new JLabel("CITY NAME");
+		cityLabel.setBounds(10, 20, 85, 25);
+		panel3.add(cityLabel);
+		
+		cityText = new JTextField(10);
+		cityText.setBounds(100, 20, 85, 25);
+		panel3.add(cityText);
+		
+		
+
+		
+		
+		
 		button = new JButton("EXISTING USER");
 		button.setBounds(10, 80, 80, 25);
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				panel2.setVisible(true);
+				panel3.setVisible(false);	
 			}
 		});
 		panel.add(button);
@@ -205,24 +246,55 @@ public class ListPage {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				panel3.setVisible(true);
+				panel2.setVisible(false);
 				
 			}
+				
 		});
 		panel.add(button2);
 
+		message = new JLabel("");
+		panel.add(message);
+		
+		
 		button3= new JButton("PLACE ORDER");
 		button3.setBounds(10, 80, 80, 25);
 		button3.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {	
+				if(panel2.isVisible() == true) {
+					String forename = fornameText.getText();
+					String surname = surnameText.getText();
+					String hosueNumber = houseNumberText.getText();
+					String postcode = postcodeText.getText();
+					
+					if(Customer.findOne(forename, surname, postcode, hosueNumber) != null) {
+						
+						Customer customer = Customer.findOne(forename, surname, postcode, hosueNumber);
+						String productName = nameLabel.getText();
+					
+						Wheel wheel = Wheel.findOne(wheelList.get(wheelBox.getSelectedIndex()).getId());
+						Frameset frameset = Frameset.findOne(framesetList.get(framesetBox.getSelectedIndex()).getId());
+						HandleBar handleBar = HandleBar.findOne(handelBarList.get(framesetBox.getSelectedIndex()).getId());
+						
+						Order.placeOrder(wheel, frameset, handleBar, productName,customer.getId());
+						
+						
+					}
+					
+				}
 				
 				
 				
+						
 			}
 		});
 		panel.add(button3);
 	
+		
+		
 		
 		frame.setVisible(true);
 		

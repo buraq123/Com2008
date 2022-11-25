@@ -32,21 +32,23 @@ public class Order {
 	}
 	
 	
-	public static Order placeOrder(Wheel wheel,Frameset frameset,HandleBar handleBar,Customer customer) {
+	public static Order placeOrder(Wheel wheel,Frameset frameset,HandleBar handleBar,String productName,Customer customer) {
 		customer.save();
-		return placeOrder(wheel,frameset,handleBar,customer.getId());
+		return placeOrder(wheel,frameset,handleBar,productName,customer.getId());
 	}
 	
 	
-	public static Order placeOrder(Wheel wheel,Frameset frameset,HandleBar handleBar,int customerId) {
+	public static Order placeOrder(Wheel wheel,Frameset frameset,HandleBar handleBar,String producName, int customerId) {
 		Order order = new Order();
 		order.totalCost = wheel.getUnitCost()*2
 				+ frameset.getUnitCost()
 				+ handleBar.getUnitCost();
 		
 		order.status = Status.PENDING;
-		order.bike = new Bike(wheel,frameset,handleBar);
-		order.bike.assemble();
+		order.bike = new Bike(wheel,frameset,handleBar,producName);
+		order.bike.save();
+		
+		
 		order.save();
 		return order;
 	}
@@ -67,7 +69,6 @@ public class Order {
 	public void fulfill() {
 		this.status =Status.FULFILLED;
 		this.save();
-		this.bike.getWheel.removefromStock();
 	}
 	
 	

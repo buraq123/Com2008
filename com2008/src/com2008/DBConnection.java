@@ -17,6 +17,11 @@ public class DBConnection {
 		this.url = url;
 	}
 	
+	
+	public Connection getConnection() {
+		return this.conn;
+	}
+	
 	public boolean connect() {
 		boolean connected =true;
 		if(conn==null) {

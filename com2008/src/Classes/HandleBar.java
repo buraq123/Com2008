@@ -22,8 +22,13 @@ public class HandleBar  extends Product{
 		this.style = style;
 	}
 
-
+	public HandleBar(int id,String serialNumber,String productName,String brandName, int unitCost, int quantity,Style style) {
+		super(id,serialNumber, productName, brandName, unitCost, quantity);
+		this.style = style;
+	}
 	
+
+
 	public Style getStyle() {
 		return style;
 	}
@@ -46,11 +51,11 @@ public class HandleBar  extends Product{
 		}
 	}
 	
-	public static HandleBar findOne(String seiralNo, String brandName){
-		DBHandleBar dbHandleBar = new DBHandleBar();
-		return dbHandleBar.findOne(seiralNo,brandName);
-		
-	}
+//	public static HandleBar findOne(String seiralNo, String brandName){
+//		DBHandleBar dbHandleBar = new DBHandleBar();
+//		return dbHandleBar.findOne(seiralNo,brandName);
+//		
+//	}
 	
 	public void addToStock(int quantity) {
 		DBHandleBar dbHandleBar = new DBHandleBar();
@@ -72,32 +77,20 @@ public class HandleBar  extends Product{
 		}
 	}
 
-
-
-	
-	
-	
-	
-	
-	
 	public static List<HandleBar> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		DBHandleBar dbHandleBar = new DBHandleBar();
+		return dbHandleBar.findAll();
+		
 	}
 
 
 
 	public static HandleBar findOne(int handlebarId) {
-		// TODO Auto-generated method stub
-		return null;
+		DBHandleBar dbHandleBar =new DBHandleBar();
+		return dbHandleBar.findOne(handlebarId);
 	}
 
 
-
-	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 
 	

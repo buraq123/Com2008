@@ -19,6 +19,22 @@ public class Product {
 		this.quantity = quantity;
 	}
 	
+	
+	
+	
+	public Product(int id, String serialNumber, String productName, String brandName, int unitCost, int quantity) {
+		super();
+		this.id = id;
+		this.serialNumber = serialNumber;
+		this.productName = productName;
+		this.brandName = brandName;
+		this.unitCost = unitCost;
+		this.quantity = quantity;
+	}
+
+
+
+
 	public int getId() {
 		return id;
 	}

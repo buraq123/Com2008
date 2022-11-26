@@ -7,23 +7,104 @@ import com2008.DBBike;
 public class Bike {
 	
 	
-	private int bikeId;
-	private String brandName;
-	private String productName;
-	private int quantity;
-	private int unitCost;
 	private int serialNumber;
+	private String productName;
+	private String brandName;
+	private int unitCost;
+	private HandleBar handleBar;
 	private Wheel wheel;
 	private Frameset frameset;
-	private HandleBar handleBar;
+
 
 	
-	public Bike(Wheel wheel, Frameset frameset, HandleBar handleBar, String productName) {
-		this.unitCost = wheel.getUnitCost() + frameset.getUnitCost() + handleBar.getUnitCost() +10;
-		this.productName = productName;
-		this.brandName = " " +frameset.getBrandName()+wheel.getStyle();
-		this.serialNumber = 1234;
+	public Bike(int serialNumber, HandleBar handleBar, Wheel wheel, Frameset frameset) {
+		this.serialNumber = serialNumber;
+		this.handleBar = handleBar;
+		this.wheel = wheel;
+		this.frameset = frameset;
 	}
+	
+
+
+	public Bike(String productName, HandleBar handleBar, Wheel wheel, Frameset frameset) {
+		this.productName = productName;
+		this.handleBar = handleBar;
+		this.wheel = wheel;
+		this.frameset = frameset;
+	}
+
+
+
+
+	public int getSerialNumber() {
+		return serialNumber;
+	}
+
+
+	public void setSerialNumber(int serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+
+	public String getProductName() {
+		return productName;
+	}
+
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+
+	public int getUnitCost() {
+		return unitCost;
+	}
+
+
+	public void setUnitCost(int unitCost) {
+		this.unitCost = unitCost;
+	}
+
+
+	public HandleBar getHandleBar() {
+		return handleBar;
+	}
+
+
+	public void setHandleBar(HandleBar handleBar) {
+		this.handleBar = handleBar;
+	}
+
+
+	public Wheel getWheel() {
+		return wheel;
+	}
+
+
+	public void setWheel(Wheel wheel) {
+		this.wheel = wheel;
+	}
+
+
+	public Frameset getFrameset() {
+		return frameset;
+	}
+
+
+	public void setFrameset(Frameset frameset) {
+		this.frameset = frameset;
+	}
+
 
 	public void save() {
 		DBBike dbike = new DBBike();
@@ -31,10 +112,10 @@ public class Bike {
 	}
 	
 
-	public int getId() {
-		DBBike dbike = new DBBike();
-		return dbike.getId(this);		
-	}
+//	public int getId() {
+//		DBBike dbike = new DBBike();
+//		return dbike.getId(this);		
+//	}
 
 	public static Bike findOne(int id) {
 		// TODO Auto-generated method stub

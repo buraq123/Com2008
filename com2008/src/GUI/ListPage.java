@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.sound.midi.SysexMessage;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -54,7 +55,7 @@ public class ListPage {
 	private static JLabel		cityLabel;
 	private static JTextField cityText;
 	private static JLabel		message;
-	private static JLabel		nameLabel;
+	private static JTextField		nameText;
 	
 	public static void main(String[] args) {
 		
@@ -69,18 +70,16 @@ public class ListPage {
 		List<Wheel> wheelList = Wheel.getAll();
 		String[] wheelStrings = new String[wheelList.size()];
 		for(int i=0; i<wheelStrings.length; i++) {
-			wheelStrings[i] = "" + wheelList.get(i).getSize() +wheelList.get(i).getBrandName()+ wheelList.get(i).getUnitCost();
+			wheelStrings[i] = "" + wheelList.get(i).getBrandName()+ wheelList.get(i).getUnitCost();
 		}
 		
 		
 		List<Frameset> framesetList = Frameset.getAll();
 		String[] frameStrings = new String[framesetList.size()];
 		for(int i=0; i<frameStrings.length; i++) {
-			frameStrings[i] = "" +framesetList.get(i).getType() + framesetList.get(i)+framesetList.get(i).getUnitCost();
+			frameStrings[i] = "" +framesetList.get(i).getBrandName()+framesetList.get(i).getUnitCost();
 		}
-//		
-		
-		
+
 		
 		
 		JFrame frame = new JFrame();
@@ -99,15 +98,17 @@ public class ListPage {
 		
 		JComboBox wheelBox=new JComboBox(wheelStrings);  
 		wheelBox.setSelectedIndex(0);
-		
-		nameLabel = new JLabel("FORENAME");
-		nameLabel.setBounds(100, 20, 85, 25);
-		panel.add(nameLabel);
+	
 		
 		panel.add(wheelBox);
 		panel.add(framesetBox);
-		panel.add(framesetBox);
-		panel.add(nameLabel);
+		panel.add(handleBarBox);
+		
+		
+		nameText = new JTextField(10);
+		nameText.setBounds(110, 20, 85, 25);
+		panel.add(nameText);
+		
 			
 		JPanel panel2 = new JPanel();
 		panel2.setVisible(false);
@@ -263,8 +264,20 @@ public class ListPage {
 		button3.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {	
+			public void actionPerformed(ActionEvent e) {
+				
+				Wheel wheel = Wheel.findOne(wheelList.get(wheelBox.getSelectedIndex()).getId());
+				
+				Frameset frameset = Frameset.findOne(framesetList.get(framesetBox.getSelectedIndex()).getId());
+			
+				HandleBar handleBar = HandleBar.findOne(handelBarList.get(handleBarBox.getSelectedIndex()).getId());
+				
+				System.out.println(handelBarList.get(handleBarBox.getSelectedIndex()).getId());
+				String productName = nameText.getText();
+				
+				
 				if(panel2.isVisible() == true) {
+					
 					String forename = fornameText.getText();
 					String surname = surnameText.getText();
 					String hosueNumber = houseNumberText.getText();
@@ -273,24 +286,47 @@ public class ListPage {
 					if(Customer.findOne(forename, surname, postcode, hosueNumber) != null) {
 						
 						Customer customer = Customer.findOne(forename, surname, postcode, hosueNumber);
-						String productName = nameLabel.getText();
-					
-						Wheel wheel = Wheel.findOne(wheelList.get(wheelBox.getSelectedIndex()).getId());
-						Frameset frameset = Frameset.findOne(framesetList.get(framesetBox.getSelectedIndex()).getId());
-						HandleBar handleBar = HandleBar.findOne(handelBarList.get(framesetBox.getSelectedIndex()).getId());
-						
-						Order.placeOrder(wheel, frameset, handleBar, productName,customer.getId());
-						
-						
+						Order.placeOrder(wheel, frameset, handleBar, productName,customer);	
+					}
+					else {
+						panel2.setVisible(false);
+						panel3.setVisible(true);
 					}
 					
 				}
-				
-				
-				
+				else {
+					
+					String forename = fornameText2.getText();
+					String surname = surnameText2.getText();
+					String hosueNumber = houseNumberText2.getText();
+					String postcode = postcodeText2.getText();
+					String road = roadNameText.getText();
+					String city = cityText.getText();
+					
+					
+					if(Customer.findOne(forename, surname, postcode, hosueNumber) != null) {
+						panel2.setVisible(true);
+						panel3.setVisible(false);
+					}
+					else {
+						Address address = null;
+						if(Address.findOne(hosueNumber,postcode) != null) {
+							address = Address.findOne(hosueNumber, postcode);
+						}
+						else {
+							address = new Address(hosueNumber,postcode,city,road);
+						}
 						
+						Customer customer = new Customer(forename,surname,address);
+						Order.placeOrder(wheel, frameset, handleBar, productName,customer);	
+				
+					}
+				}		
 			}
 		});
+		
+	
+		
 		panel.add(button3);
 	
 		

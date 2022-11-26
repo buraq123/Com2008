@@ -5,6 +5,7 @@ import java.util.List;
 import com.mysql.cj.result.StringValueFactory;
 
 import Classes.HandleBar.Style;
+import com2008.DBWheel;
 
 public class Wheel extends Product{
 	
@@ -30,6 +31,15 @@ public class Wheel extends Product{
 		this.style = style;
 		this.breakStyle = breakStyle;
 	}
+
+	public Wheel(int id,String serialNumber, String productName, String brandName, int unitCost, int quantity,StyleWheel style, BrakeStyle breakStyle,String diameter) {
+		super(id,serialNumber, productName, brandName, unitCost, quantity);
+		this.diameter = diameter;
+		this.style = style;
+		this.breakStyle = breakStyle;
+	}
+	
+	
 
 
 	public String getDiameter() {
@@ -68,15 +78,16 @@ public class Wheel extends Product{
 	
 	
 	public static List<Wheel> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		DBWheel dbWheel =new DBWheel();
+		return dbWheel.getAll();
+		
 	}
 
 	
 
 	public static Wheel findOne(int wheelId) {
-		// TODO Auto-generated method stub
-		return null;
+		DBWheel dbWheel = new DBWheel();
+		return dbWheel.findOne(wheelId);
 	}
 
 	

@@ -2,6 +2,8 @@ package Classes;
 
 import java.util.List;
 
+import com2008.DBFrameset;
+
 public class Frameset extends Product{
 	
 	
@@ -17,11 +19,11 @@ public class Frameset extends Product{
 		this.shocks = shocks;
 		this.gear = gear;
 	}
-
 	
-	public static List<Frameset> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public Frameset(int id,String serialNumber,String productName,String brandName,int unitCost,int quantity, String size,Boolean shocks, String gear) {
+		super(id,serialNumber, productName, brandName, unitCost, quantity);
+		this.shocks = shocks;
+		this.gear = gear;
 	}
 
 
@@ -48,10 +50,17 @@ public class Frameset extends Product{
 	public String getGear() {
 		return gear;
 	}
+	
+	public static List<Frameset> getAll() {
+		DBFrameset dbFrameset = new DBFrameset();
+		return dbFrameset.getAll();
+	}
 
-	public static Frameset findOne() {
-		// TODO Auto-generated method stub
-		return null;
+
+
+	public static Frameset findOne(int id) {
+		DBFrameset dbFrameset = new DBFrameset();
+		return dbFrameset.findOne(id);
 	}
 
 	

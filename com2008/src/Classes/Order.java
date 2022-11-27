@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import com2008.DBOrder;
 
@@ -21,6 +22,7 @@ public class Order {
 	private Status status;
 	private Bike bike;
 	private Customer customer;
+	private String staffName;
 	
 	
 	
@@ -110,6 +112,65 @@ public class Order {
 	public void setBike(Bike bike) {
 		this.bike = bike;
 	}
+
+	public String getStaffName() {
+		return staffName;
+	}
+
+
+
+
+	public void setStaffName(String staffName) {
+		this.staffName = staffName;
+	}
+	
+
+
+
+	public static List<OrderDTO2> findConfirmedOrders() {
+		DBOrder dbOrder =new DBOrder();
+		return dbOrder.getConfirmedOrders();
+	}
+
+
+
+
+	public static void fulfillOrder(int id, String wheelSerialNo , String wheelBrandName, String frameSerialNo, String frameBrandName, String handlebarSerialNo, 
+			String handlebarBrandName) {
+		
+		DBOrder dbOrder =new DBOrder();
+		dbOrder.fulfillOrder(id);
+		Wheel wheel = Wheel.findOne(wheelSerialNo, wheelBrandName);
+		wheel.setQuantity(wheel.getQuantity()-1);
+		wheel.updateStock();
+		
+		Frameset frameset = Frameset.findOne(frameSerialNo,frameBrandName);
+		frameset.setQuantity(frameset.getQuantity()-1);
+		frameset.updateStock();
+		
+		HandleBar handleBar =HandleBar.findOne(handlebarSerialNo, handlebarBrandName);
+		handleBar.setQuantity(handleBar.getQuantity()-1);
+		handleBar.updateStock();
+	}
+	
+	
+	public static void confirmOrder(int id,String ) {
+		
+	}
+
+
+
+
+	public static List<OrderDTO> findPendingOrders() {
+		DBOrder dbOrder = new DBOrder();
+		return dbOrder.getPendingOrders();
+				
+		
+	}
+
+
+
+
 	
 	
 	

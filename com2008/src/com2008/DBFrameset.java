@@ -34,6 +34,7 @@ public class DBFrameset {
 		int quantity = frameset.getQuantity();
 		String size =frameset.getSize();
 		Boolean shocks = frameset.getShocks();
+	
 		String shocksdb;
 		if(shocks==true) {
 			shocksdb ="YES";
@@ -133,6 +134,65 @@ public class DBFrameset {
 			try {
 				Statement statement = conn.createStatement();
 				String query = "SELECT * FROM team045.Frame where idFrame = '"+id+"';";
+				statement.execute(query);
+				ResultSet resultSet = statement.executeQuery(query);
+				if(resultSet.next()) {
+					Boolean shocks;
+					if(resultSet.getString(8).equals("YES")) {
+						shocks = true;
+					}
+					else {
+						shocks = false;
+					}
+							
+					frameset = new Frameset(Integer.valueOf(resultSet.getString(1)),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),
+							Integer.valueOf(resultSet.getString(5)),Integer.valueOf(resultSet.getString(6)),resultSet.getString(7),shocks,resultSet.getString(9));
+				}
+			}
+			catch(SQLException e) {
+				System.out.println("dadsdad");
+				e.printStackTrace();
+			}
+		}
+		return frameset;
+	}
+
+
+	public void updateStock(Frameset frameset) {
+		
+		dbConnection = new DBConnection(dbname, username, password,url);
+		boolean connected = true;
+		dbConnection.connect();
+		Connection conn = dbConnection.getConnection();
+		
+		if(conn != null) {
+			try {
+				Statement statement = conn.createStatement();
+				String query = "UPDATE team045.Frame SET quantity = '"+frameset.getQuantity()+"' WHERE idFrame = '"+frameset.getId()+"' "
+						;
+				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			}
+			catch(SQLException e) {
+				System.out.println("dadsdad");
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+
+	public Frameset findOne(String serialNumber, String brandName) {
+	Frameset frameset = null; 
+		
+		dbConnection = new DBConnection(dbname, username, password,url);
+		boolean connected = true;
+		dbConnection.connect();
+		Connection conn = dbConnection.getConnection();
+		
+		if(conn != null) {
+			try {
+				Statement statement = conn.createStatement();
+				String query = "SELECT * FROM team045.Frame where serialNo = '"+serialNumber+"' AND brandName = '"+brandName+"';";
 				statement.execute(query);
 				ResultSet resultSet = statement.executeQuery(query);
 				if(resultSet.next()) {

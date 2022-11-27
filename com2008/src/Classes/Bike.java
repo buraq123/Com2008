@@ -22,6 +22,7 @@ public class Bike {
 		this.handleBar = handleBar;
 		this.wheel = wheel;
 		this.frameset = frameset;
+		this.unitCost = handleBar.getUnitCost()+wheel.getUnitCost()+frameset.getUnitCost()+10;
 	}
 	
 
@@ -31,6 +32,7 @@ public class Bike {
 		this.handleBar = handleBar;
 		this.wheel = wheel;
 		this.frameset = frameset;
+		this.unitCost = handleBar.getUnitCost()+wheel.getUnitCost()+frameset.getUnitCost()+10;
 	}
 
 

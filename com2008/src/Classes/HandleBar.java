@@ -38,45 +38,6 @@ public class HandleBar  extends Product{
 	}
 
 
-
-
-
-	public void save() {
-		if (findOne(this.getId()) != null) {
-			throw new IllegalArgumentException("product already exixts");	
-		}
-		else {
-			DBHandleBar dbHandleBar = new DBHandleBar();
-			dbHandleBar.save(this);	
-		}
-	}
-	
-//	public static HandleBar findOne(String seiralNo, String brandName){
-//		DBHandleBar dbHandleBar = new DBHandleBar();
-//		return dbHandleBar.findOne(seiralNo,brandName);
-//		
-//	}
-	
-	public void addToStock(int quantity) {
-		DBHandleBar dbHandleBar = new DBHandleBar();
-		this.setQuantity(this.getQuantity()+quantity);
-		dbHandleBar.update(this);
-	}
-	
-	
-	
-	
-	public void removeFromStock(int quantity) {
-		DBHandleBar dbHandleBar = new DBHandleBar();
-		if(this.getQuantity() >= quantity) {
-			this.setQuantity(this.getQuantity()-quantity);
-			dbHandleBar.update(this);
-		}
-		else {
-			throw new IllegalStateException(String.format("Not enough stock current stock :%s Removed quantity %s",this.getQuantity(),quantity));
-		}
-	}
-
 	public static List<HandleBar> getAll() {
 		DBHandleBar dbHandleBar = new DBHandleBar();
 		return dbHandleBar.findAll();
@@ -90,6 +51,61 @@ public class HandleBar  extends Product{
 		return dbHandleBar.findOne(handlebarId);
 	}
 
+	public void updateStock() {
+		DBHandleBar dbHandleBar = new DBHandleBar();
+		dbHandleBar.updateStock(this);
+		
+	}
+	
+	
+	public static HandleBar findOne(String serialNo, String brandName){
+		DBHandleBar dbHandleBar = new DBHandleBar();
+		return dbHandleBar.findOne(serialNo,brandName);
+		
+	}
+
+	public void save() {
+		DBHandleBar dbHandleBar = new DBHandleBar();
+		dbHandleBar.save(this);
+		
+	}
+
+
+//	public void save() {
+//		if (findOne(this.getId()) != null) {
+//			throw new IllegalArgumentException("product already exixts");	
+//		}
+//		else {
+//			DBHandleBar dbHandleBar = new DBHandleBar();
+//			dbHandleBar.save(this);	
+//		}
+//	}
+	
+//	public static HandleBar findOne(String seiralNo, String brandName){
+//		DBHandleBar dbHandleBar = new DBHandleBar();
+//		return dbHandleBar.findOne(seiralNo,brandName);
+//		
+//	}
+	
+//	public void addToStock(int quantity) {
+//		DBHandleBar dbHandleBar = new DBHandleBar();
+//		this.setQuantity(this.getQuantity()+quantity);
+//		dbHandleBar.update(this);
+//	}
+//	
+//	
+//	
+//	
+//	public void removeFromStock(int quantity) {
+//		DBHandleBar dbHandleBar = new DBHandleBar();
+//		if(this.getQuantity() >= quantity) {
+//			this.setQuantity(this.getQuantity()-quantity);
+//			dbHandleBar.update(this);
+//		}
+//		else {
+//			throw new IllegalStateException(String.format("Not enough stock current stock :%s Removed quantity %s",this.getQuantity(),quantity));
+//		}
+//	}
 
 
 

@@ -70,24 +70,41 @@ public class Wheel extends Product{
 	public void setBreakStyle(BrakeStyle breakStyle) {
 		this.breakStyle = breakStyle;
 	}
+	
 
-	
-	
-	
-	
-	
-	
+	public void save() {
+		DBWheel dbWheel = new DBWheel();
+		dbWheel.save(this);
+	}
+
+
 	public static List<Wheel> getAll() {
 		DBWheel dbWheel =new DBWheel();
 		return dbWheel.getAll();
 		
 	}
 
-	
-
 	public static Wheel findOne(int wheelId) {
 		DBWheel dbWheel = new DBWheel();
 		return dbWheel.findOne(wheelId);
+	}
+
+	public void updateStock() {
+		DBWheel dbWheel = new DBWheel();
+		dbWheel.updateStock(this);
+		
+	}
+
+	public static Wheel findOne(String serialNumber, String brandName) {
+		DBWheel dbWheel = new DBWheel();
+		return dbWheel.findOne(serialNumber,brandName);
+	
+	}
+
+	public static void deleteStock(int id) {
+		DBWheel dbWheel = new DBWheel();
+		dbWheel.deleteStock(id);
+		
 	}
 
 	

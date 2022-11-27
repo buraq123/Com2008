@@ -1,12 +1,36 @@
 package Classes;
 
+import com2008.DBStaff;
+
 public class Staff {
 	
-	private String username,password;
+	
+	
+	private int id;
+	private String username;
+	private String password ;
 
-	public Staff(String username2, String password2) {
-		// TODO Auto-generated constructor stub
+	
+	
+	
+	
+	
+	
+	public Staff(int id, String username, String password) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
 	}
+	
+	
+
+	public Staff(String username, String password) {
+
+		this.username = username;
+		this.password = password;
+	}
+
+
 
 	public String getUsername() {
 		return username;
@@ -24,9 +48,9 @@ public class Staff {
 		this.password = password;
 	}
 
-	public Object findOne() {
-		// TODO Auto-generated method stub
-		return null;
+	public static Staff findOne(String username, String password) {
+		DBStaff dbstaff = new DBStaff();
+		return dbstaff.findOne(username,password);
 	}
 
 }

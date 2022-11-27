@@ -16,12 +16,14 @@ public class Frameset extends Product{
 
 	public Frameset(String serialNumber,String productName,String brandName,int unitCost,int quantity, String size,Boolean shocks, String gear) {
 		super(serialNumber, productName, brandName, unitCost, quantity);
+		this.size=size;
 		this.shocks = shocks;
 		this.gear = gear;
 	}
 	
 	public Frameset(int id,String serialNumber,String productName,String brandName,int unitCost,int quantity, String size,Boolean shocks, String gear) {
 		super(id,serialNumber, productName, brandName, unitCost, quantity);
+		this.size=size;
 		this.shocks = shocks;
 		this.gear = gear;
 	}
@@ -62,6 +64,27 @@ public class Frameset extends Product{
 		DBFrameset dbFrameset = new DBFrameset();
 		return dbFrameset.findOne(id);
 	}
+
+	public void updateStock() {
+		DBFrameset dbFrameset = new DBFrameset();
+		dbFrameset.updateStock(this);
+		
+	}
+
+	public static Frameset findOne(String serialNumber, String brandName) {
+		DBFrameset dbFrameset = new DBFrameset();
+		return dbFrameset.findOne(serialNumber,brandName);
+	}
+
+	public void save() {
+		DBFrameset dbFrameset = new DBFrameset();
+		dbFrameset.save(this);
+		
+	}
+	
+	
+	
+	
 
 	
 	

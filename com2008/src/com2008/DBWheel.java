@@ -121,6 +121,68 @@ public class DBWheel {
 		}
 		return wheel;
 	}
+
+
+	public void updateStock(Wheel wheel) {
+		 
+
+		dbConnection = new DBConnection(dbname, username, password,url);
+		boolean connected = true;
+		dbConnection.connect();
+		Connection conn = dbConnection.getConnection();
+		
+		if(conn != null) {
+			try {
+				Statement statement = conn.createStatement();
+				String query = "UPDATE team045.Wheel SET quantity = '"+wheel.getQuantity()+"' WHERE idWHeel = '"+wheel.getId()+"' "
+						;
+				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			}
+			catch(SQLException e) {
+				System.out.println("dadsdad");
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+
+	public Wheel findOne(String serialNumber, String brandName) {
+
+		Wheel wheel = null;
+		
+		dbConnection = new DBConnection(dbname, username, password,url);
+		boolean connected = true;
+		dbConnection.connect();
+		Connection conn = dbConnection.getConnection();
+		
+		if(conn != null) {
+			try {
+				Statement statement = conn.createStatement();
+				String query = "SELECT * FROM team045.Wheel where serialNo = '"+serialNumber+"'AND brandName = '"+brandName+"';";
+				statement.execute(query);
+				ResultSet resultSet = statement.executeQuery(query);
+				if(resultSet.next()) {
+					wheel = new Wheel(Integer.valueOf(resultSet.getString(1)),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),
+							Integer.valueOf(resultSet.getString(5)),
+							Integer.valueOf(resultSet.getString(6)),StyleWheel.valueOf(resultSet.getString(7)),BrakeStyle.valueOf(resultSet.getString(8)),resultSet.getString(9));		
+				}
+			}
+			catch(SQLException e) {
+				System.out.println("dadsdad");
+				e.printStackTrace();
+			}
+		}
+		return wheel;
+	}
+
+
+	public void deleteStock(int id) {
+		
+		
+	}
+	
+	
 	
 	
 	

@@ -56,14 +56,12 @@ public class StaffLogIn {
 				String username = userText.getText();
 				String password =String.valueOf(passwordText.getPassword());
 				
-				Staff staff = new Staff(username,password);
-				
-				if(staff.findOne() == null) {
+				if(Staff.findOne(username, password) == null) {
 					sucess.setText("wrong username or password");
 				}
 				else {
-					ListPage listPage = new ListPage();	
-				}
+//					ListPage listPage = new ListPage();
+					}
 			}
 		});
 		panel.add(button);

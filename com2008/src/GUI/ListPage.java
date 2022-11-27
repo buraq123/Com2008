@@ -59,7 +59,7 @@ public class ListPage {
 	
 	public static void main(String[] args) {
 		
-//		
+		
 		List<HandleBar> handelBarList = HandleBar.getAll();
 		String[] handleBarStrings = new String[handelBarList.size()];
 		for(int i=0; i<handleBarStrings.length; i++) {
@@ -327,11 +327,7 @@ public class ListPage {
 		
 	
 		
-		panel.add(button3);
-	
-		
-		
-		
+		panel.add(button3);	
 		frame.setVisible(true);
 		
       

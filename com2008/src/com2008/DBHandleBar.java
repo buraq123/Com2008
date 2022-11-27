@@ -121,15 +121,69 @@ public class DBHandleBar {
 	}
 
 	
-	public void update(HandleBar handleBar) {
-		// TODO Auto-generated method stub	
+
+	public void updateStock(HandleBar handleBar) {
+		
+		dbConnection = new DBConnection(dbname, username, password,url);
+		boolean connected = true;
+		dbConnection.connect();
+		Connection conn = dbConnection.getConnection();
+		
+		if(conn != null) {
+			try {
+				Statement statement = conn.createStatement();
+				String query = "UPDATE team045.Handlebar SET quantity = '"+handleBar.getQuantity()+"' WHERE idHandlebar = '"+handleBar.getId()+"' "
+						;
+				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			}
+			catch(SQLException e) {
+				System.out.println("dadsdad");
+				e.printStackTrace();
+			}
+		}
 	}
 
 
-	public static void main(String[] args) {
-		DBHandleBar dbHandleBar = new DBHandleBar();
-		System.out.println(dbHandleBar.findOne(1).getId()+"fdsfs");
+
+	public HandleBar findOne(String seriallNo, String brandName) {
+		
+		HandleBar handleBar =null;
+		
+		dbConnection = new DBConnection(dbname, username, password,url);
+		boolean connected = true;
+		dbConnection.connect();
+		Connection conn = dbConnection.getConnection();
+		
+		if(conn != null) {
+			try {
+				Statement statement = conn.createStatement();
+				String query = "SELECT * FROM team045.Handlebar where serialNo = '"+seriallNo+"' AND brandName = '"+brandName+"';";
+				statement.execute(query);
+				ResultSet resultSet = statement.executeQuery(query);
+				
+				if(resultSet.next()) {
+					System.out.println(Integer.valueOf(resultSet.getString(1)));
+					handleBar = new HandleBar(Integer.valueOf(resultSet.getString(1)),resultSet.getString(2),resultSet.getString(3),resultSet.getString(4),
+							Integer.valueOf(resultSet.getString(5)),Integer.valueOf(resultSet.getString(6)),Style.valueOf(resultSet.getString(7)));
+				}
+			}
+			catch(SQLException e) {
+				System.out.println("dadsdad");
+				e.printStackTrace();
+			}
+		}
+		return handleBar;
+		
 	}
+	
+	
+//	public static void main(String[] args) {
+//		DBHandleBar dbHandleBar = new DBHandleBar();
+//		System.out.println(dbHandleBar.findOne(1).getId()+"fdsfs");
+//	}
+
+
+
 
 	
 	

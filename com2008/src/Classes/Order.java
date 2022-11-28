@@ -127,7 +127,7 @@ public class Order {
 
 
 
-	public static List<OrderDTO2> findConfirmedOrders() {
+	public static List<OrderDTO> findConfirmedOrders() {
 		DBOrder dbOrder =new DBOrder();
 		return dbOrder.getConfirmedOrders();
 	}
@@ -154,7 +154,9 @@ public class Order {
 	}
 	
 	
-	public static void confirmOrder(int id,String ) {
+	public static void confirmOrder(int id,String staffName) {
+		DBOrder dbOrder =new DBOrder();
+		dbOrder.confirmOrder(id,staffName);
 		
 	}
 
@@ -166,6 +168,22 @@ public class Order {
 		return dbOrder.getPendingOrders();
 				
 		
+	}
+
+
+
+
+	public static OrderDTO findOne(int id) {
+		DBOrder dbOrder = new DBOrder();
+		return dbOrder.findOne(id);
+	}
+
+
+
+
+	public static void delete(int id) {
+		DBOrder dbOrder = new DBOrder();
+		dbOrder.delete(id);
 	}
 
 

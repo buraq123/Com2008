@@ -25,7 +25,7 @@ public class FulfillOrder {
 		
 		
 		
-		List<OrderDTO2> orderList = Order.findConfirmedOrders();
+		List<OrderDTO> orderList = Order.findConfirmedOrders();
 		String order[][] = new String[orderList.size()][10];
 		for(int i=0; i<orderList.size(); i++) {
 			String id =String.valueOf(orderList.get(i).getId());

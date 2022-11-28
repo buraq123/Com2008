@@ -38,7 +38,7 @@ public class ConfirmOrder {
 	
 	
 	public static void main(String[] args) {
-		
+		ConfirmOrder confirmOrder = new ConfirmOrder("burak");
 		
 		
 		List<OrderDTO> orderList = Order.findPendingOrders();
@@ -94,19 +94,14 @@ public class ConfirmOrder {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 					try {
-						try {
-							Order.confirmOrder(orderList.get(jTable.getSelectedRow()).getId(),
-									orderList.get(jTable.getSelectedRow()).getWheelSerialNumber(),orderList.get(jTable.getSelectedRow()).getWheelBrandName(),
-									orderList.get(jTable.getSelectedRow()).getFrameSerialNumber(),orderList.get(jTable.getSelectedRow()).getFrameBrandName(),
-									orderList.get(jTable.getSelectedRow()).getHandlebarSerialNumber(),orderList.get(jTable.getSelectedRow()).getHandlebarBrandName());
-						
+						Order.confirmOrder(orderList.get(jTable.getSelectedRow()).getId(),confirmOrder.getStaffUsername());
 					}
 					catch (ArrayIndexOutOfBoundsException ex) {
 						// TODO: handle exception
 					}
-				
 			}
 		});
+		panel.add(button);
 		
 		
 	}

@@ -3,7 +3,10 @@ package Classes;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+import Classes.Order.Status;
+
 public class OrderDTO {
+	
 	private int id;
 	private int totalCost;
 	private String date;
@@ -13,7 +16,24 @@ public class OrderDTO {
 	private String frameBrandName;
 	private String handlebarSerialNumber;
 	private String handlebarBrandName;
-	
+	private String staffName;
+	private Status status;
+	public OrderDTO(int id, int totalCost, String date, String wheelSerialNumber, String wheelBrandName,
+			String frameSerialNumber, String frameBrandName, String handlebarSerialNumber, String handlebarBrandName,
+			String staffName, Status status) {
+		super();
+		this.id = id;
+		this.totalCost = totalCost;
+		this.date = date;
+		this.wheelSerialNumber = wheelSerialNumber;
+		this.wheelBrandName = wheelBrandName;
+		this.frameSerialNumber = frameSerialNumber;
+		this.frameBrandName = frameBrandName;
+		this.handlebarSerialNumber = handlebarSerialNumber;
+		this.handlebarBrandName = handlebarBrandName;
+		this.staffName = staffName;
+		this.status = status;
+	}
 	
 	public int getId() {
 		return id;
@@ -26,19 +46,6 @@ public class OrderDTO {
 	}
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;
-	}
-	public OrderDTO(int id, int totalCost, String date, String wheelSerialNumber, String wheelBrandName,
-			String frameSerialNumber, String frameBrandName, String handlebarSerialNumber, String handlebarBrandName) {
-		super();
-		this.id = id;
-		this.totalCost = totalCost;
-		this.date = date;
-		this.wheelSerialNumber = wheelSerialNumber;
-		this.wheelBrandName = wheelBrandName;
-		this.frameSerialNumber = frameSerialNumber;
-		this.frameBrandName = frameBrandName;
-		this.handlebarSerialNumber = handlebarSerialNumber;
-		this.handlebarBrandName = handlebarBrandName;
 	}
 	public String getDate() {
 		return date;
@@ -82,6 +89,25 @@ public class OrderDTO {
 	public void setHandlebarBrandName(String handlebarBrandName) {
 		this.handlebarBrandName = handlebarBrandName;
 	}
+	public String getStaffName() {
+		return staffName;
+	}
+	public void setStaffName(String staffName) {
+		this.staffName = staffName;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

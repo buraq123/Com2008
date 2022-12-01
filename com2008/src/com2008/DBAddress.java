@@ -1,6 +1,7 @@
 package com2008;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,11 +32,15 @@ private DBConnection dbConnection;
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+	
 				String query = "INSERT INTO team045.Address (houseNumber,postcode,city,roadName) VALUES "
 						+ "('"+address.getHouseNumber()+"','"+address.getPostcode()+"','"+address.getCityName()+"','"+address.getRoadName()+"');";
+				
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 				ResultSet resultSet = statement.getGeneratedKeys();
+				
+				
 				if(resultSet.next()) {
 					int id = resultSet.getInt(1);
 					address.setId(id);
@@ -64,7 +69,7 @@ private DBConnection dbConnection;
 		if(conn != null) {
 			try {
 				Statement statement = conn.createStatement();
-				String query = "SELECT * FROM team045.Address "+ "WHERE houseNumber = '"+houseNumber+"' AND postcode= '"+postcode+"';";
+				String query = "SELECT * FROM team045.Address  WHERE houseNumber = '"+houseNumber+"' AND postcode= '"+postcode+"';";
 				statement.execute(query);
 				ResultSet resultSet = statement.executeQuery(query);
 				if(resultSet.next()) {

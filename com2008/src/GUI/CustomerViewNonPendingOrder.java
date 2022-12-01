@@ -2,7 +2,6 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -12,13 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import com.mysql.cj.xdevapi.Table;
-
 import Classes.Customer;
 import Classes.Order;
 import Classes.OrderDTO;
 
-public class CustomerViewOrderPending {
+public class CustomerViewNonPendingOrder {
 	
 	private static JLabel   fornameLabel;
 	private static JTextField  fornameText;
@@ -32,8 +29,8 @@ public class CustomerViewOrderPending {
 	private static JButton  button2;
 	private static JTable  table;
 	
-	
-	public CustomerViewOrderPending() {
+
+	public CustomerViewNonPendingOrder() {
 		
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
@@ -98,7 +95,7 @@ public class CustomerViewOrderPending {
 				if(Customer.findOne(forename, surname, postcode, hosueNumber) != null) {
 				
 					Customer customer = Customer.findOne(forename, surname, postcode, hosueNumber);
-					List<OrderDTO> orderList = Order.findPendingOrdersByCusId(customer.getId());
+					List<OrderDTO> orderList = Order.findNonPendingOrdersByCusId(customer.getId());
 					String order[][] = new String[orderList.size()][9];
 					for(int i=0; i<orderList.size(); i++) {
 						String id =String.valueOf(orderList.get(i).getId());
@@ -134,18 +131,6 @@ public class CustomerViewOrderPending {
 					table = new JTable(order,column);
 					panel.add(table);
 					
-					button2= new JButton("Delet");
-					button2.addActionListener(new ActionListener() {
-						
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							try {
-								Order.delete(orderList.get(table.getSelectedRow()).getId());	
-							} catch (Exception e2) {
-							}
-						}
-					});
-					panel.add(button2);
 				}
 				
 			}
@@ -156,5 +141,6 @@ public class CustomerViewOrderPending {
 		
 		
 	}
+
 
 }

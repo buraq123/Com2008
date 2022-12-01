@@ -113,12 +113,6 @@ public class Bike {
 		dbike.save(this);		
 	}
 	
-
-//	public int getId() {
-//		DBBike dbike = new DBBike();
-//		return dbike.getId(this);		
-//	}
-
 	public static Bike findOne(int id) {
 		// TODO Auto-generated method stub
 		return null;

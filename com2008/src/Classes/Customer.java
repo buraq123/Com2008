@@ -81,13 +81,16 @@ public class Customer {
 		return dbCustomer.findOne(forename,surname,postcode,housenumber);
 		
 	}
-	
-	
-	public void update() {
-		DBCustomer dbcustomer = new DBCustomer();
-		dbcustomer.update(this);	
-	}
 
+	public static void update(Customer customer) {
+		DBCustomer dbCustomer = new DBCustomer();
+		if((customer.getAddress().getId()>=1) == false) {
+			customer.getAddress().save();
+		}
+		dbCustomer.update(customer);
+	}
+	
+	
 	
 
 }

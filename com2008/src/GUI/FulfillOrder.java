@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import Classes.Order;
@@ -17,13 +19,13 @@ import Classes.OrderDTO2;
 public class FulfillOrder {
 	
 	private static JButton button;
+	private static JButton backbutton;
+	private static JLabel error;
 	
 
 
 
-	public static void main(String[] args) {
-		
-		
+	public FulfillOrder(String username) {
 		
 		List<OrderDTO> orderList = Order.findConfirmedOrders();
 		String order[][] = new String[orderList.size()][10];
@@ -58,7 +60,7 @@ public class FulfillOrder {
 		}
 		
 		
-		String column[]={"1","1","1","1","1","1","1","1","1","1"};       
+		String column[]={"ORDER ID","TOTAL COST","DATE","WHEEL SERIAL NO","WHEEL BRAND NAME","FRAME SERIAL NO","FRAME BRAND NAME","HANDLEBAR SERIAL NO","HANDLEBAR BRANDNAME","CONFIRMEDBY"};   
 		
 		
 		
@@ -71,31 +73,40 @@ public class FulfillOrder {
 		frame.add(panel,BorderLayout.SOUTH);
 		frame.setVisible(true);
 		panel.add(jTable);
-		
+		frame.add(new JScrollPane(jTable));
 		
 		button = new JButton("FULFILL ORDER");
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
 				Order.fulfillOrder(orderList.get(jTable.getSelectedRow()).getId(),
 						orderList.get(jTable.getSelectedRow()).getWheelSerialNumber(),orderList.get(jTable.getSelectedRow()).getWheelBrandName(),
 						orderList.get(jTable.getSelectedRow()).getFrameSerialNumber(),orderList.get(jTable.getSelectedRow()).getFrameBrandName(),
 						orderList.get(jTable.getSelectedRow()).getHandlebarSerialNumber(),orderList.get(jTable.getSelectedRow()).getHandlebarBrandName());
 				}
+				
 				catch (ArrayIndexOutOfBoundsException ex) {
-					// TODO: handle exception
+					error.setText("NO ROW HAS BEEN CHOSEN");
 				}		
 			}
 		});
 		panel.add(button);
 		
-		
-		
-		
-		
-		
+		backbutton = new JButton("BACK TO STAFF PAGE");
+		backbutton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StaffMainScreen staffMainScreen = new StaffMainScreen(username);
+				frame.dispose();
+			}
+		});
+		panel.add(backbutton);
+		error = new JLabel();
+		panel.add(error);
 	}
 
 

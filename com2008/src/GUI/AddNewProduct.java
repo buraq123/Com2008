@@ -80,18 +80,14 @@ public class AddNewProduct {
 	
 	private static JButton handlebarButton;
 	
-	
-	
-	
-	
+	private static JLabel errorWheeL;
+	private static JLabel errorFrame;
+	private static JLabel errorHandle;
 	
 	
 
-
-
-	
-	
-	public static void main(String[] args) {
+    public AddNewProduct() {
+		
 		
 		
 
@@ -138,7 +134,7 @@ public class AddNewProduct {
 		panel2.add(wheelUnitCostTextField);
 		
 		
-		wheelDiameterLabel= new JLabel("UNIT COST");
+		wheelDiameterLabel= new JLabel("DIAMETER");
 		panel2.add(wheelDiameterLabel);
 		
 		wheelDiametereTextField= new JTextField(10);
@@ -158,25 +154,57 @@ public class AddNewProduct {
 		panel2.add(brakeStyle);
 		
 		
+		errorWheeL = new JLabel();
+		panel2.add(errorWheeL);
+		
+		
 		wheelButton = new JButton();
 		wheelButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				String serialNumber = wheelSerialNumberText.getText();
-				String brandName = wheelBrandNameTextField.getText();
-				String productName = wheelProductNameTextField.getText();
-				int unitCost = Integer.valueOf(wheelUnitCostTextField.getText());
-				StyleWheel styleWheel = StyleWheel.valueOf(String.valueOf(wheelStyle.getSelectedItem())); 
-				BrakeStyle brakestyle = BrakeStyle.valueOf(String.valueOf(brakeStyle.getSelectedItem())); 
-				String diameter = wheelDiametereTextField.getText();
-				if(Wheel.findOne(serialNumber,brandName) == null) {
-					Wheel wheel = new Wheel(serialNumber,productName,brandName,unitCost,0,styleWheel,brakestyle,diameter);
-					wheel.save();
+			
+				if(wheelSerialNumberText.getText().isEmpty()  || wheelBrandNameTextField.getText().isEmpty() ||  wheelDiametereTextField.getText().isEmpty() ||
+						wheelUnitCostTextField.getText().isEmpty()	|| wheelDiametereTextField.getText().isEmpty()) {
+					errorWheeL.setText("FILL ALL THE FIELD");
 				}
-				
+				else {
+					try {
+					
+						String serialNumber = wheelSerialNumberText.getText();
+						String brandName = wheelBrandNameTextField.getText();
+						String productName = wheelProductNameTextField.getText();
+
+						StyleWheel styleWheel = StyleWheel.valueOf(String.valueOf(wheelStyle.getSelectedItem())); 
+						BrakeStyle brakestyle = BrakeStyle.valueOf(String.valueOf(brakeStyle.getSelectedItem())); 
+						String diameter = wheelDiametereTextField.getText();
+						int diameter2 =Integer.parseInt(wheelDiametereTextField.getText());
+						int unitCost = Integer.parseInt(wheelUnitCostTextField.getText());
+						
+						if(unitCost <= 0) {
+							errorWheeL.setText("PUT VALID UNIT COST");
+						}
+						else {
+							if(Wheel.findOne(serialNumber,brandName) == null) {
+								Wheel wheel = new Wheel(serialNumber,productName,brandName,unitCost,0,styleWheel,brakestyle,diameter);
+								wheel.save();
+								AddNewProduct addNewProduct = new AddNewProduct();
+								frame.dispose();
+							}
+							else {
+								errorWheeL.setText("THIS PRODUCT EXIST");
+							}
+						}
+					}		
+					 catch (Exception e2) {
+						 System.out.print("usmna");
+						 errorWheeL.setText("INTEGER VALUES");
+					}
+				}
 			}
+			
+		
+			
 		});
 		panel2.add(wheelButton);
 		
@@ -189,7 +217,7 @@ public class AddNewProduct {
 		frame.add(panel3,BorderLayout.SOUTH);
 		
 		
-		frameSerialNumberLabel= new JLabel("FRAME     SERIAL NUMBER");
+		frameSerialNumberLabel= new JLabel("FRAME  SERIAL NUMBER");
 		panel3.add(frameSerialNumberLabel);
 		
 		frameSerialNumberText = new JTextField(10);
@@ -238,27 +266,40 @@ public class AddNewProduct {
 		panel3.add(frameGearTextField);
 		
 		
+		errorFrame = new JLabel();
+		panel3.add(errorFrame);
+		
 		frameButton = new JButton();
 		frameButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					int unitCost = Integer.valueOf(frameUnitCostTextField.getText());
+					if(unitCost <= 0) {
+						errorFrame.setText("PUT VALID COST");
+					}
+					Boolean absorbers = absorbersButton.isSelected();
+					String size = frameSizeTextField.getText();
+					String gear = frameGearTextField.getText();
+					String serialNumber = frameSerialNumberText.getText();
+					String brandName = frameBrandNameTextField.getText();
+					String productName = frameProductNameTextField.getText();
+					
+					if(Frameset.findOne(serialNumber,brandName) == null) {
+						Frameset frameset = new Frameset(serialNumber, productName, brandName, unitCost, 0, size, absorbers, gear);
+						frameset.save();
+					}
+					else {
+						errorFrame.setText("THIS PRODUCT EXIST");
+					}
+					
 				
-				String serialNumber = frameSerialNumberText.getText();
-				String brandName = frameBrandNameTextField.getText();
-				String productName = frameProductNameTextField.getText();
-				int unitCost = Integer.valueOf(frameUnitCostTextField.getText());
-				Boolean absorbers = absorbersButton.isSelected();
-				String size = frameSizeTextField.getText();
-				String gear = frameGearTextField.getText();
-				
-				if(Frameset.findOne(serialNumber,brandName) == null) {
-					Frameset frameset = new Frameset(serialNumber, productName, brandName, unitCost, 0, size, absorbers, gear);
-					System.out.println(frameset.getSize());
-					frameset.save();
 				}
-				
- 				
+				catch (Exception ex) {
+					
+					errorFrame.setText("");
+				}
 			}
 		});
 		panel3.add(frameButton);

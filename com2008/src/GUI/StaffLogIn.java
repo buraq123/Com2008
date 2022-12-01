@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,21 +11,29 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.mysql.cj.LicenseConfiguration;
+import com.mysql.cj.protocol.a.SqlDateValueEncoder;
+
+import Classes.SQL;
 import Classes.Staff;
 
 public class StaffLogIn {
 	
+	private static JPanel panel;
+	private static JFrame frame;
 	private static JLabel userLabel;
 	private static JLabel passwordLabel;
+	private static JLabel message;
 	private static JTextField userText;
 	private static JPasswordField passwordText;
 	private static JButton button;
-	private static JLabel sucess;
+	private static JButton backbutton;
+	private static JLabel fail;
 	
-	public static void main(String[] args) {
+	public StaffLogIn() {
 		
-		JPanel panel = new JPanel();
-		JFrame frame = new JFrame();
+		panel = new JPanel();
+		frame = new JFrame();
 		frame.setSize(500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -50,22 +59,47 @@ public class StaffLogIn {
 		button = new JButton("Login");
 		button.setBounds(10, 80, 80, 25);
 		button.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String username = userText.getText();
 				String password =String.valueOf(passwordText.getPassword());
 				
-				if(Staff.findOne(username, password) == null) {
-					sucess.setText("wrong username or password");
+				if(SQL.validate(username) &&  SQL.validate(password)) {
+					try {
+						if(Staff.findOne(username, password) == null) {
+							fail.setText("CHECK ALL THE DETAILS");	
+						}
+						else {
+							StaffMainScreen staffMainScreen = new StaffMainScreen(username);
+							frame.dispose();
+						}
+					} catch (NoSuchAlgorithmException e1) {
+						e1.printStackTrace();
+					}	
 				}
 				else {
-//					ListPage listPage = new ListPage();
-					}
+					fail.setText("SQL INJECTION");	
+				}
 			}
 		});
+		
+		fail = new JLabel();
+		panel.add(fail);
 		panel.add(button);
-		sucess = new JLabel("");
-		panel.add(sucess);
+
+		
+		
+		backbutton = new JButton("BACK TO MAIN PAGE");
+		backbutton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainPage mainPage = new MainPage();
+				frame.dispose();
+			}
+		});
+		panel.add(backbutton);
+		
 	}
 }

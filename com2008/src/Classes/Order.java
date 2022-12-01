@@ -189,6 +189,21 @@ public class Order {
 
 
 
+	public static List<OrderDTO> findPendingOrdersByCusId(int id) {
+		DBOrder dbOrder = new DBOrder();
+		return dbOrder.findPendingOrdersByCusId(id);
+	}
+
+	
+
+	public static List<OrderDTO> findNonPendingOrdersByCusId(int id) {
+		DBOrder dbOrder = new DBOrder();
+		return dbOrder.findNonPendingOrdersByCusId(id);
+	}
+
+
+
+
 	
 	
 	

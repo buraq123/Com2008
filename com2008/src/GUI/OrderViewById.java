@@ -23,7 +23,8 @@ public class OrderViewById {
 	public static JButton button2;
 	public static JTable table;
 	
-	public static void main(String[] args) {
+	 public OrderViewById() {
+
 		
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();

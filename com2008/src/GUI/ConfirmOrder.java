@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import Classes.Order;
@@ -16,30 +18,14 @@ import Classes.OrderDTO2;
 
 public class ConfirmOrder {
 	
-	private String staffUsername;
+	
 	private static JButton button;
-	
+	private static JButton backbutton;
+	private static JLabel error;
 
-	public String getStaffUsername() {
-		return staffUsername;
-	}
-
-
-
-	public void setStaffUsername(String staffUsername) {
-		this.staffUsername = staffUsername;
-	}
-
-
-
-	public ConfirmOrder(String staffUsername) {
-		this.staffUsername = staffUsername;
-	}
 	
 	
-	public static void main(String[] args) {
-		ConfirmOrder confirmOrder = new ConfirmOrder("burak");
-		
+	public ConfirmOrder(String username) {
 		
 		List<OrderDTO> orderList = Order.findPendingOrders();
 		String order[][] = new String[orderList.size()][10];
@@ -73,7 +59,7 @@ public class ConfirmOrder {
 		}
 		
 		
-		String column[]={"1","1","1","1","1","1","1","1","1","1"};       
+		String column[]={"ORDER ID","TOTAL COST","DATE","WHEEL SERIAL NO","WHEEL BRAND NAME","FRAME SERIAL NO","FRAME BRAND NAME","HANDLEBAR SERIAL NO","HANDLEBAR BRANDNAME"};       
 		
 		
 		
@@ -87,23 +73,38 @@ public class ConfirmOrder {
 		frame.setVisible(true);
 		panel.add(jTable);
 		
+		frame.add(new JScrollPane(jTable));
 		
 		button = new JButton("CONFIRM ORDER");
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 					try {
-						Order.confirmOrder(orderList.get(jTable.getSelectedRow()).getId(),confirmOrder.getStaffUsername());
+						Order.confirmOrder(orderList.get(jTable.getSelectedRow()).getId(),username);
+						panel.repaint();
+						
 					}
 					catch (ArrayIndexOutOfBoundsException ex) {
-						// TODO: handle exception
+						error.setText("NO ROW HAS BEEN CHOSEN");
 					}
 			}
 		});
 		panel.add(button);
 		
-		
+		backbutton = new JButton("BACK TO STAFF PAGE");
+		backbutton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StaffMainScreen staffMainScreen = new StaffMainScreen(username);
+				frame.dispose();
+			}
+		});
+		panel.add(backbutton);
+		error = new JLabel();
+		panel.add(error);
 	}
 	
 }

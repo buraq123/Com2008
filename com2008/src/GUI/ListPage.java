@@ -57,8 +57,8 @@ public class ListPage {
 	private static JLabel		message;
 	private static JTextField		nameText;
 	
-	public static void main(String[] args) {
-		
+	public ListPage() {
+	
 		
 		List<HandleBar> handelBarList = HandleBar.getAll();
 		String[] handleBarStrings = new String[handelBarList.size()];

@@ -30,12 +30,11 @@ public class AddStock {
 	private static JButton frameButton;
 	private static JButton handlebarButton;
 	
+	private static JLabel error;
 	
 	
-	
-	public static void main(String[] args) {
-		
-		
+	 public AddStock() {
+		 
 		List<HandleBar> handelBarList = HandleBar.getAll();
 		String[] handleBarStrings = new String[handelBarList.size()];
 		for(int i=0; i<handleBarStrings.length; i++) {
@@ -81,7 +80,8 @@ public class AddStock {
 		panel.add(handleBarBox);
 		
 		
-		
+		error= new JLabel();
+		panel.add(error);
 
 		wheelQuantityLabel = new JLabel("WHEEL QUANTITY");
 		wheelQuantityLabel.setBounds(100, 20, 85, 25);
@@ -100,15 +100,24 @@ public class AddStock {
 				Wheel wheel = Wheel.findOne(wheelList.get(wheelBox.getSelectedIndex()).getId());
 				try {
 					int addedQuantity = Integer.valueOf(wheelQuantityText.getText());
-					wheel.setQuantity(wheel.getQuantity()+addedQuantity);
-					wheel.updateStock();
+					
+					if(addedQuantity<=0) {
+						error.setText("ENTER A VALID NUMBER");
+					}
+					else {
+						wheel.setQuantity(wheel.getQuantity()+addedQuantity);
+						wheel.updateStock();
+					}
+					
 				}
 				catch (NumberFormatException ex) {
+					error.setText("ENTER A VALID NUMBER");
 				}
 	
 			}
 		});
 		panel.add(wheelButton);
+		
 		
 		
 		frameQuantityLabel = new JLabel("FRAME QUANTITY");
@@ -128,11 +137,16 @@ public class AddStock {
 				Frameset frameset = Frameset.findOne(framesetList.get(framesetBox.getSelectedIndex()).getId());
 				try {
 					int addedQuantity = Integer.valueOf(frameQuantityText.getText());
-					frameset.setQuantity(frameset.getQuantity()+addedQuantity);
-					frameset.updateStock();	
+					if(addedQuantity<=0) {
+						error.setText("ENTER A VALID NUMBER");
+					}
+					else {
+						frameset.setQuantity(frameset.getQuantity()+addedQuantity);
+						frameset.updateStock();	
+					}
 				}
 				catch (NumberFormatException ex) {
-					// TODO: handle exception
+					error.setText("ENTER A VALID NUMBER");
 				}
 				
 			}
@@ -156,17 +170,24 @@ public class AddStock {
 				HandleBar handleBar = HandleBar.findOne(handelBarList.get(handleBarBox.getSelectedIndex()).getId());
 				try {
 					int addedQuantity = Integer.valueOf(handlebarQuantityText.getText());
-					handleBar.setQuantity(handleBar.getQuantity()+addedQuantity);
-					handleBar.updateStock();
+					
+					if(addedQuantity<=0) {
+						error.setText("ENTER A VALID NUMBER");
+					}
+					else {
+
+						handleBar.setQuantity(handleBar.getQuantity()+addedQuantity);
+						handleBar.updateStock();
+					}
 				}
 				catch (NumberFormatException ex) {
-					// TODO: handle exception
+					error.setText("ENTER A VALID NUMBER");
 				}	
 			}
 		});
+		
 		panel.add(handlebarButton);
 		frame.setVisible(true);
-		
 	}
 
 }

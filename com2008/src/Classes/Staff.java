@@ -1,5 +1,10 @@
 package Classes;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
 import com2008.DBStaff;
 
 public class Staff {
@@ -11,23 +16,10 @@ public class Staff {
 	private String password ;
 
 	
-	
-	
-	
-	
-	
-	public Staff(int id, String username, String password) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
-	
-	
 
-	public Staff(String username, String password) {
 
+	public Staff(String username) {
 		this.username = username;
-		this.password = password;
 	}
 
 
@@ -48,9 +40,8 @@ public class Staff {
 		this.password = password;
 	}
 
-	public static Staff findOne(String username, String password) {
+	public static Staff findOne(String username, String password) throws NoSuchAlgorithmException {
 		DBStaff dbstaff = new DBStaff();
 		return dbstaff.findOne(username,password);
 	}
-
 }

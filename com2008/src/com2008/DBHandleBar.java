@@ -1,6 +1,7 @@
 package com2008;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,12 +37,14 @@ public class DBHandleBar {
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "INSERT INTO team045.Handlebar (serialNo,productName,brandName,unitCost,quantity,style) VALUES "
 						+ "('"+serialNumber+"','"+productName+"','"+brandName+"','"+unitCost+"','"+quantity+"','"+style+"');";
 				
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 				ResultSet resultSet = statement.getGeneratedKeys();
+				
 				if(resultSet.next()) {
 					int id = resultSet.getInt(1);
 					handleBar.setId(id);
@@ -131,9 +134,10 @@ public class DBHandleBar {
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "UPDATE team045.Handlebar SET quantity = '"+handleBar.getQuantity()+"' WHERE idHandlebar = '"+handleBar.getId()+"' "
 						;
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			}
 			catch(SQLException e) {

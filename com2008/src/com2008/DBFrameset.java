@@ -1,6 +1,7 @@
 package com2008;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -52,12 +53,15 @@ public class DBFrameset {
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "INSERT INTO team045.Frame (serialNo,productName,brandName,unitCost,quantity,size,shocks,gear) VALUES "
 						+ "('"+serialNumber+"','"+productName+"','"+brandName+"','"+unitCost+"','"+quantity+"','"+size+"','"+shocksdb+"','"+gears+"');";
 				
+				
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 				ResultSet resultSet = statement.getGeneratedKeys();
+				
 				if(resultSet.next()) {
 					int id = resultSet.getInt(1);
 					frameset.setId(id);
@@ -167,9 +171,10 @@ public class DBFrameset {
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "UPDATE team045.Frame SET quantity = '"+frameset.getQuantity()+"' WHERE idFrame = '"+frameset.getId()+"' "
 						;
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			}
 			catch(SQLException e) {

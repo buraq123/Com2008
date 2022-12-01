@@ -1,6 +1,7 @@
 package com2008;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -41,10 +42,11 @@ public class DBWheel {
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "INSERT INTO team045.Wheel (serialNo,productName,brandName,unitCost,quantity,style,typeOfBrakes,size) VALUES "
 						+ "('"+serialNumber+"','"+productName+"','"+brandName+"','"+unitCost+"','"+quantity+"','"+style+"','"+brakeStyle+"','"+diameter+"');";
 				
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 				ResultSet resultSet = statement.getGeneratedKeys();
 				if(resultSet.next()) {
@@ -133,9 +135,10 @@ public class DBWheel {
 		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "UPDATE team045.Wheel SET quantity = '"+wheel.getQuantity()+"' WHERE idWHeel = '"+wheel.getId()+"' "
 						;
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			}
 			catch(SQLException e) {
@@ -177,10 +180,7 @@ public class DBWheel {
 	}
 
 
-	public void deleteStock(int id) {
-		
-		
-	}
+	
 	
 	
 	

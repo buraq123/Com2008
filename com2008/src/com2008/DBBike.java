@@ -2,6 +2,7 @@ package com2008;
 
 import java.awt.datatransfer.FlavorEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,30 +30,35 @@ public class DBBike {
 	public void save(Bike bike) {
 		
 		
-		System.out.println(bike.getHandleBar().getStyle());
+		
 		dbConnection = new DBConnection(dbname, username, password,url);
 		boolean connected = true;
 		dbConnection.connect();
 		Connection conn = dbConnection.getConnection();
+		
 		if(conn != null) {
 			try {
-				Statement statement = conn.createStatement();
+				
 				String query = "INSERT INTO team045.Bike (brandName,unitCost,HandleBarNo,WheelNo,FrameNo) VALUES "
 						+ "('"+bike.getBrandName()+"','"+bike.getUnitCost()+"','"+bike.getHandleBar().getId()+"','"+bike.getWheel().getId()+"','"+bike.getFrameset().getId()+"');";
+				
+				PreparedStatement statement = conn.prepareStatement(query);
 				statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 				ResultSet resultSet = statement.getGeneratedKeys();
+				
 				if(resultSet.next()) {
 					bike.setSerialNumber(Integer.valueOf(resultSet.getString(1)));
 				}
 			}
 			catch(SQLException e) {
-				System.out.println("dadsdad");
+				
 				e.printStackTrace();
 			}
 		}
 		else {
-			System.out.println("burak");
+		
 		}
+		
 	}
 	
 	

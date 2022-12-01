@@ -101,11 +101,11 @@ public class Wheel extends Product{
 	
 	}
 
-	public static void deleteStock(int id) {
-		DBWheel dbWheel = new DBWheel();
-		dbWheel.deleteStock(id);
-		
-	}
+//	public static void deleteStock(int id) {
+//		DBWheel dbWheel = new DBWheel();
+//		dbWheel.deleteStock(id);
+//		
+//	}
 
 	
 	
